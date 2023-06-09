@@ -165,19 +165,6 @@ def create_toborzo_form():
                     # convert dict to a string
                     questiions_and_answers_dictionary = str(questiions_and_answers_dictionary)
 
-                    conn = create_connection()
-                    cursor = conn.cursor()
-                    # I have these columns in the table: id, name, email, telephone_number, dob, questions, created_at, updated_at.
-                    # The id and the created_at and updated_at columns are automatically filled by the database.
-                    insert_query = """INSERT INTO cleango.bi_job_applications (name, email, telephone_number, dob, questions) VALUES ('{}', '{}', '{}', '{}', '{}')""".format(
-                        name, email_user, phone_number, birth_year, questiions_and_answers_dictionary)
-                    print(insert_query)
-                    cursor.execute(insert_query)
-                    # Commit the changes and close the cursor and the database connection
-                    conn.commit()
-                    cursor.close()
-                    conn.close()
-
                     kizaro_ok = 0
                     if int(birth_year) < 1970:
                         kizaro_ok = kizaro_ok + 1
@@ -189,6 +176,19 @@ def create_toborzo_form():
                         kizaro_ok = kizaro_ok + 1
                     if robogo == "Nem" and van_auto == "Nem":
                         kizaro_ok = kizaro_ok + 1
+
+                    conn = create_connection()
+                    cursor = conn.cursor()
+                    # I have these columns in the table: id, name, email, telephone_number, dob, questions, created_at, updated_at.
+                    # The id and the created_at and updated_at columns are automatically filled by the database.
+                    insert_query = """INSERT INTO cleango.bi_job_applications (name, email, outcome, telephone_number, dob, questions) VALUES ('{}', '{}', '{}', '{}', '{}', '{}')""".format(
+                        name, email_user, kizaro_ok, phone_number, birth_year, questiions_and_answers_dictionary)
+                    print(insert_query)
+                    cursor.execute(insert_query)
+                    # Commit the changes and close the cursor and the database connection
+                    conn.commit()
+                    cursor.close()
+                    conn.close()
                     
                     if kizaro_ok > 0:
                         # Ha a kizaro ok miatt nem tud jelentkezni ezt rakjuk az emailbe
