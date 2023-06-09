@@ -61,37 +61,32 @@ def create_toborzo_form():
 
         col1, col2, col3 = st.columns([6, 1, 1])
 
-        st.markdown('### Szemelyes adatok')
+        st.markdown('### Személyes adatok')
         name = st.text_input("Név", key='name')
-        email_user = st.text_input("Email", key='email_user')
-        phone_number = st.text_input("Telefonszám", key='phone_number')
-        # create list with numbers from 1900 to 2020 and also incude blank option
-        blank_list = ["Valassz szuletesi evet"]
-        birth_year_list = blank_list + list(range(1900, 2021))
-        birth_year = st.selectbox("Születési ev", key='birth_year', options=birth_year_list)
+        email_user = st.text_input("Email cimed", key='email_user')
+        phone_number = st.text_input("Telefonszámod", key='phone_number')
+        birth_year = st.selectbox("Születési év", key='birth_year', options=["Válassz születesi évet"] + list(range(1900, 2021)))
         
-        st.markdown('### Kerdesek')
-        blank_valasztas = "Kerjuk valassz"
-        lakhely_options = [blank_valasztas, "Budapest", "Pest megye", "Egyeb"]
-        lakhely = st.radio("Hol laksz? Honnan jarnal be dolgozni?", key='lakhely', options = lakhely_options, horizontal=True)
-        mellek_vagy_foallas = st.radio("Mellék, vagy főállásban dolgoznál nálunk?", key='mellek_vagy_foallas', options = [blank_valasztas, "Mellekallasban", "Foallasban"], horizontal=True)
-        tapasztalat = st.radio("Van tapasztalatod autómosás, vagy autókozmetika területén? - nem kizáró ok ha nincs", key='tapasztalat', options = [blank_valasztas, "Igen", "Valamennyi van", "Nem"], horizontal=True)
-        motor = st.radio("Rendelkezel kismotor/motor, vagy B kategóriás jogosítvánnyal?", key='motor', options = [blank_valasztas, "Igen", "Nem"], horizontal=True)
-        robogo = st.radio("Rendelkezel tapasztalattal motorozás/robogózás terén? - nem kizáró ok ha nem", key='robogo', options = [blank_valasztas, "Igen", "Nem"], horizontal=True,)
-        auto = st.radio("Rendelkezel saját autóval? - nem kizáró ok ha nem", key='auto', options = [blank_valasztas, "Igen", "Nem"], horizontal=True)
+        st.markdown('### Kérdések')
+        blank_valasztas = "Kérjük válassz:"
+        horizontal = True
 
+        lakhely = st.radio("Hol laksz? (Honnan járnál be dolgozni?)", key='lakhely', options = [blank_valasztas, "Budapest", "Pest megyei település", "Egyéb"], horizontal=horizontal)
+        mellek_vagy_foallas = st.radio("Mellék, vagy főállásban dolgoznál nálunk?", key='mellek_vagy_foallas', options = [blank_valasztas, "Mellékallasban", "Főállásban"], horizontal=horizontal)
+        van_auto = st.radio("Rendelkezel saját autóval?", key='van_auto', options = [blank_valasztas, "Igen", "Nem"], horizontal=horizontal)
+        tapasztalat = st.radio("Van tapasztalatod autómosás, vagy autókozmetika területén?", key='tapasztalat', options = [blank_valasztas, "Igen", "Valamennyi van", "Nem"], horizontal=horizontal)
+        jogositvany = st.radio("Rendelkezel kismotor/motor, vagy B kategóriás jogosítvánnyal?", key='motor', options = [blank_valasztas, "Igen", "Nem"], horizontal=horizontal)
+        robogo = st.radio("Rendelkezel tapasztalattal motorozás/robogózás terén?", key='robogo', options = [blank_valasztas, "Igen", "Nem"], horizontal=horizontal)
+        
         submitted = st.form_submit_button("Jelentkezem", on_click=session_counter)
 
         col1, col2 = st.columns([2, 2])
 
         with col1:
-
             st.markdown("Nyomja meg a gombot, hogy a jelentkezését elküldje nekünk.")
-            #st.markdown("Ha megnyomja a gombot, és nem lát semmilyen egyéb üzenetet, ez alatt a mondat alatt, akkor nyomja meg a gombot újra.")
         with col2:
             st.write("Ha valami kérdése van, kérjük keressen minket bizalommal a következő elérhetőségeken:")
             st.write("Email: info@cleango.hu")
-            st.write("Telefon: +36 30 141 5100")
 
         if submitted:
             print("submitted")
@@ -104,56 +99,86 @@ def create_toborzo_form():
                 error_counter = 0
 
                 if name == "":
-                    st.warning("Kerjuk adja meg a nevet.")
+                    st.warning("Kerjük adja meg a nevét.")
                     error_counter += 1
-                if email_user == "" or "@" not in email_user:
-                    st.warning("Kerjuk adja meg az email cimet.")
+                if email_user == "" or "@" not in email_user or "." not in email_user:
+                    st.warning("Kerjük adjon meg helyes email címet.")
                     error_counter += 1
                 if phone_number == "":
-                    st.warning("Kerjuk adja meg a telefonszamat.")
+                    st.warning("Kerjük adja meg a telefonszámat helyesen.")
                     error_counter += 1
                 if birth_year == "Valassz szuletesi evet":
-                    st.warning("Kerjuk valassza ki a szuletesi evet.")
+                    st.warning("Kerjük válassza ki a születesi évét.")
                     error_counter += 1
                 if lakhely == blank_valasztas:
-                    st.warning("Kerjuk valassza ki a lakhelyet.")
+                    st.warning("Kerjük válassza ki a lakhelyet.")
                     error_counter += 1
                 if mellek_vagy_foallas == blank_valasztas:
-                    st.warning("Kerjuk valassza ki hogy mellek, vagy foallasban szeretne dolgozni.")
+                    st.warning("Kerjük válassza ki hogy mellek, vagy foallasban szeretne dolgozni.")
+                    error_counter += 1
+                if van_auto == blank_valasztas:
+                    st.warning("Kerjük válassza ki hogy van-e sajat autoja.")
                     error_counter += 1
                 if tapasztalat == blank_valasztas:
-                    st.warning("Kerjuk valassza ki hogy van-e tapasztalata autómosás, vagy autókozmetika területén.")
+                    st.warning("Kerjük válassza ki hogy van-e tapasztalata autómosás, vagy autókozmetika területén.")
                     error_counter += 1
-                if motor == blank_valasztas:
-                    st.warning("Kerjuk valassza ki hogy rendelkezik-e kismotor/motor, vagy B kategóriás jogosítvánnyal.")
+                if jogositvany == blank_valasztas:
+                    st.warning("Kerjük válassza ki hogy rendelkezik-e kismotor/motor, vagy B kategóriás jogosítvánnyal.")
                     error_counter += 1
                 if robogo == blank_valasztas:
-                    st.warning("Kerjuk valassza ki hogy rendelkezik-e tapasztalattal motorozás/robogózás terén.")
+                    st.warning("Kerjük válassza ki hogy rendelkezik-e tapasztalattal motorozás/robogózás terén.")
                     error_counter += 1
-                if auto == blank_valasztas:
-                    st.warning("Kerjuk valassza ki hogy rendelkezik-e saját autóval.")
-                    error_counter += 1
-                
+
+                # create a string with the answers
+                questiions_and_answers = f"""
+                    Név: {name} <br><br>
+                    Email: {email_user} <br><br>
+                    Telefonszám: {phone_number} <br><br>
+                    Születési év: {birth_year} <br><br>
+                    Hol laksz: {lakhely} <br><br>
+                    Mellék, vagy főállásban dolgoznál: {mellek_vagy_foallas} <br><br>
+                    Van saját autód: {van_auto} <br><br>
+                    Van tapasztalatod autómosás, vagy autókozmetika területén: {tapasztalat} <br><br>
+                    Rendelkezel kismotor/motor, vagy B kategóriás jogosítvánnyal: {jogositvany} <br><br>
+                    Rendelkezel tapasztalattal motorozás/robogózás terén: {robogo}
+                """
                 
                 if error_counter == 0:
 
-                    # evalauate the answers
-                    # if year < 1970
                     kizaro_ok = "Nem"
                     if int(birth_year) < 1970:
                         kizaro_ok = "Igen"
-                    if lakhely != "Budapest":
+                    if lakhely == "Pest megye" and van_auto == "Nem":
                         kizaro_ok = "Igen"
+                    if lakhely == "Egyéb":
+                        kizaro_ok = "Igen"
+                    if jogositvany == "Nem":
+                        kizaro_ok = "Igen"
+                    if robogo == "Nem" and van_auto == "Nem":
+                        kizaro_ok = "Igen"
+                    if robogo == "Nem" and van_auto == "Igen":
+                        kizaro_ok = "Nem"
                     
                     
-                    email_subject_to_us = "CleanGo - Moso toborzas"
-                    email_body_to_us = 'Email szovege a cleangonak'
+                    
                     if kizaro_ok == "Igen":
-                        email_subject_to_us = "CleanGo - Moso toborzas - Sajnaljuk"
-                        email_body_to_us = 'Email szovege a cleangonak - Sajnaljuk'
+                        # Ha a kizaro ok miatt nem tud jelentkezni ezt rakjuk az emailbe
+                        email_subject_to_us = "CleanGo - Moso Jelentkezes - Nem sikeres"
+                        email_body_to_us = f"""Moso jelentkezes erkezett. A jelentkezes NEM sikeres <br><br> 
+                            A jelentkezo az alabbi valaszokat adta : {questiions_and_answers}"""
+                        email_subject_to_user = "CleanGo - Moso toborzas - Sajnáljuk"
+                        email_body_to_user = f"""Sajnáljuk, ez most nem sikerült. :( Ez lehet azért, mert nem felelt meg a feltételeknek, vagy mert jelenleg nincs szabad kapacításunk fogadni téged. <br><br> 
+                        Köszönjük, hogy jelentkeztél, és ha változik a helyzet, akkor felvesszük veled a kapcsolatot."""
+
                     if kizaro_ok == "Nem":
-                        email_subject_to_user = "CleanGo - Gratulalunk"
-                        email_body_to_user = 'Email szovege a usernek - Granulalunk'
+                        # Ha nincs kizaro ok
+                        foglalasi_link = "https://calendly.com/cleango/interju"
+                        email_subject_to_us = "CleanGo - Moso toborzas"
+                        email_body_to_us = f"""Moso jelentkezes erkezett. A jelentkezes SIKERES. <br><br> 
+                            A jelentkezo az alabbi valaszokat adta : {questiions_and_answers}"""
+                        email_subject_to_user = "CleanGo - Gratulálunk"
+                        email_body_to_user = f"""Gratulálunk, a válaszaid alapján kiválasztásra kerültél. Az első lépést megtetted a CleanGo csapatába való bekerüléshez. <br><br> 
+                         A masodik lépéshez foglalj időpontot a következő linken: {foglalasi_link} <br><br>"""
                         
                     # send the email to CleanGo
                     for email_adress_to_us in email_list_to_us:

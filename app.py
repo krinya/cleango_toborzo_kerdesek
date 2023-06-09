@@ -9,7 +9,7 @@ import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
 #set streamlit page name
-st.set_page_config(page_title='CleanGo - Moso Toborzas', page_icon='data/cleango-logo-small.png', layout='wide')
+st.set_page_config(page_title='CleanGo - Moso Jelentkezés', page_icon='data/cleango-logo-small.png', layout='centered')
 
 col1, col2 = st.columns([2, 8])
 with col1:
@@ -17,7 +17,8 @@ with col1:
 
 # create a Streamlit app
 
-st.title("Cleango - Moso Toborzas")
-st.markdown("Leiras")
+st.title("Cleango - Moso Jelentkezés")
+st.markdown("Leíras: ")
+st.markdown("Ide kene par sort irni hogy mi is ez a moso jelentkezes")
 
 create_toborzo_form()
