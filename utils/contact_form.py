@@ -181,7 +181,7 @@ def create_toborzo_form():
                     cursor = conn.cursor()
                     # I have these columns in the table: id, name, email, telephone_number, dob, questions, created_at, updated_at.
                     # The id and the created_at and updated_at columns are automatically filled by the database.
-                    insert_query = """INSERT INTO cleango.bi_job_applications (name, email, outcome, telephone_number, dob, questions) VALUES ('{}', '{}', '{}', '{}', '{}', '{}')""".format(
+                    insert_query = """INSERT INTO cleango.bi_washer_applications (name, email, outcome, telephone_number, dob, questions) VALUES ('{}', '{}', '{}', '{}', '{}', '{}')""".format(
                         name,
                         email_user,
                         kizaro_ok,
