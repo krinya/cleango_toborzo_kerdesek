@@ -3,9 +3,6 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from utils.custom_functions import *
-import streamlit_authenticator as stauth
-import yaml
-from yaml.loader import SafeLoader
 from PIL import Image
 from datetime import datetime
 import ssl
