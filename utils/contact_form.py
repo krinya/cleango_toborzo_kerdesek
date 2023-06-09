@@ -189,7 +189,6 @@ def create_toborzo_form():
                         birth_year,
                         questiions_and_answers_dictionary.replace("'", "''")
                     )
-                    st.write(insert_query)
                     cursor.execute(insert_query)
                     # Commit the changes and close the cursor and the database connection
                     conn.commit()
