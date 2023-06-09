@@ -8,6 +8,8 @@ from PIL import Image
 from datetime import datetime
 import ssl
 import pandas as pd
+import pymysql
+
 ssl._create_default_https_context = ssl._create_unverified_context
 
 def add_picture_to_streamlit(image_path, caption = None):
