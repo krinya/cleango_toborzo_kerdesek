@@ -3,6 +3,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from utils.custom_functions import *
+from utils.sql_functions import *
 from PIL import Image
 from datetime import datetime
 import ssl
@@ -146,6 +147,34 @@ def create_toborzo_form():
                         Rendelkezel kismotor/motor, vagy B kategóriás jogosítvánnyal: {jogositvany} <br><br>
                         Rendelkezel tapasztalattal motorozás/robogózás terén: {robogo}
                     """
+
+                    questiions_and_answers_dictionary = {
+                        "name": name,
+                        "email": email_user,
+                        "tel_number": phone_number,
+                        "dob": birth_year,
+                        "location": lakhely,
+                        "job": mellek_vagy_foallas,
+                        "own_car": van_auto,
+                        "experience": tapasztalat,
+                        "motor_licence": jogositvany,
+                        "motor_experience": robogo
+                    }
+                    # convert dict to a string
+                    questiions_and_answers_dictionary = str(questiions_and_answers_dictionary)
+
+                    conn = create_connection()
+                    cursor = conn.cursor()
+                    # I have these columns in the table: id, name, email, telephone_number, dob, questions, created_at, updated_at.
+                    # The id and the created_at and updated_at columns are automatically filled by the database.
+                    insert_query = """INSERT INTO cleango.bi_job_applications (name, email, telephone_number, dob, questions) VALUES ('{}', '{}', '{}', '{}', '{}')""".format(
+                        name, email_user, phone_number, birth_year, questiions_and_answers_dictionary)
+                    print(insert_query)
+                    cursor.execute(insert_query)
+                    # Commit the changes and close the cursor and the database connection
+                    conn.commit()
+                    cursor.close()
+                    conn.close()
 
                     kizaro_ok = 0
                     if int(birth_year) < 1970:
