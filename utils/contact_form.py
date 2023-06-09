@@ -52,7 +52,7 @@ def session_counter():
 
 def create_toborzo_form():
 
-    email_list_to_us = ["menyhert.kristof@cleango.hu"] #ez az email cimre fogja elkuldeni a rendeles adatait
+    email_list_to_us = ["menyhert.kristof@gmail.hu"] #ez az email cimre fogja elkuldeni a rendeles adatait
 
     with st.form(key='toborzo_form'):
 
@@ -129,21 +129,22 @@ def create_toborzo_form():
                     st.warning("Kerjük válassza ki hogy rendelkezik-e tapasztalattal motorozás/robogózás terén.")
                     error_counter += 1
 
-                # create a string with the answers
-                questiions_and_answers = f"""
-                    Név: {name} <br><br>
-                    Email: {email_user} <br><br>
-                    Telefonszám: {phone_number} <br><br>
-                    Születési év: {birth_year} <br><br>
-                    Hol laksz: {lakhely} <br><br>
-                    Mellék, vagy főállásban dolgoznál: {mellek_vagy_foallas} <br><br>
-                    Van saját autód: {van_auto} <br><br>
-                    Van tapasztalatod autómosás, vagy autókozmetika területén: {tapasztalat} <br><br>
-                    Rendelkezel kismotor/motor, vagy B kategóriás jogosítvánnyal: {jogositvany} <br><br>
-                    Rendelkezel tapasztalattal motorozás/robogózás terén: {robogo}
-                """
+                
                 
                 if error_counter == 0:
+                    # create a string with the answers
+                    questiions_and_answers = f"""
+                        Név: {name} <br><br>
+                        Email: {email_user} <br><br>
+                        Telefonszám: {phone_number} <br><br>
+                        Születési év: {birth_year} <br><br>
+                        Hol laksz: {lakhely} <br><br>
+                        Mellék, vagy főállásban dolgoznál: {mellek_vagy_foallas} <br><br>
+                        Van saját autód: {van_auto} <br><br>
+                        Van tapasztalatod autómosás, vagy autókozmetika területén: {tapasztalat} <br><br>
+                        Rendelkezel kismotor/motor, vagy B kategóriás jogosítvánnyal: {jogositvany} <br><br>
+                        Rendelkezel tapasztalattal motorozás/robogózás terén: {robogo}
+                    """
 
                     kizaro_ok = 0
                     if int(birth_year) < 1970:
@@ -157,16 +158,14 @@ def create_toborzo_form():
                     if robogo == "Nem" and van_auto == "Nem":
                         kizaro_ok = kizaro_ok + 1
                     
-                    
-                    
                     if kizaro_ok > 0:
                         # Ha a kizaro ok miatt nem tud jelentkezni ezt rakjuk az emailbe
                         email_subject_to_us = "CleanGo - Moso Jelentkezes - Nem sikeres"
                         email_body_to_us = f"""Moso jelentkezes erkezett. A jelentkezes NEM sikeres <br><br> 
-                            A jelentkezo az alabbi valaszokat adta : {questiions_and_answers}"""
+                        A jelentkezo az alabbi valaszokat adta : {questiions_and_answers}"""
                         email_subject_to_user = "CleanGo - Moso toborzas - Sajnáljuk"
                         email_body_to_user = f"""Szia {name}! <br><br>
-                        Sajnáljuk a jelentkezésed most nem sikerült. :( Ez lehet azért, mert nem felelt meg a feltételeknek, vagy mert jelenleg nincs szabad kapacításunk fogadni téged. <br><br> 
+                        Sajnáljuk a jelentkezésed most nem volt sikeres. :( <br><br> Ez lehet azért, mert nem felelt meg a feltételeknek, vagy mert jelenleg nincs szabad kapacításunk fogadni Téged. <br><br> 
                         Köszönjük, hogy jelentkeztél, és ha változik a helyzet, akkor felvesszük veled a kapcsolatot. <br><br> Üdvözlettel, <br> CleanGo csapata <br><br>"""
 
                     if kizaro_ok == 0:
