@@ -165,7 +165,8 @@ def create_toborzo_form():
                         email_body_to_us = f"""Moso jelentkezes erkezett. A jelentkezes NEM sikeres <br><br> 
                             A jelentkezo az alabbi valaszokat adta : {questiions_and_answers}"""
                         email_subject_to_user = "CleanGo - Moso toborzas - Sajnáljuk"
-                        email_body_to_user = f"""Sajnáljuk, ez most nem sikerült. :( Ez lehet azért, mert nem felelt meg a feltételeknek, vagy mert jelenleg nincs szabad kapacításunk fogadni téged. <br><br> 
+                        email_body_to_user = f"""Szia {name}! <br><br>
+                        Sajnáljuk a jelentkezésed most nem sikerült. :( Ez lehet azért, mert nem felelt meg a feltételeknek, vagy mert jelenleg nincs szabad kapacításunk fogadni téged. <br><br> 
                         Köszönjük, hogy jelentkeztél, és ha változik a helyzet, akkor felvesszük veled a kapcsolatot. <br><br> Üdvözlettel, <br> CleanGo csapata <br><br>"""
 
                     if kizaro_ok == 0:
@@ -175,8 +176,9 @@ def create_toborzo_form():
                         email_body_to_us = f"""Moso jelentkezes erkezett. A jelentkezes SIKERES. <br><br> 
                             A jelentkezo az alabbi valaszokat adta : {questiions_and_answers}"""
                         email_subject_to_user = "CleanGo - Gratulálunk"
-                        email_body_to_user = f"""Gratulálunk, a válaszaid alapján kiválasztásra kerültél. Az első lépést megtetted a CleanGo csapatába való bekerüléshez. <br><br> 
-                         A masodik lépéshez foglalj időpontot a következő linken: {foglalasi_link} <br><br> Üdvözlettel, <br> CleanGo csapata <br><br>"""
+                        email_body_to_user = f"""Szia {name}! <br><br>
+                        Gratulálunk, a válaszaid alapján kiválasztásra kerültél. Az első lépést megtetted a CleanGo csapatába való bekerüléshez. <br><br> 
+                        A masodik lépéshez foglalj időpontot a következő linken: {foglalasi_link} <br><br> Üdvözlettel, <br> CleanGo csapata <br><br>"""
                         
                     # send the email to CleanGo
                     for email_adress_to_us in email_list_to_us:
