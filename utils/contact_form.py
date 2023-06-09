@@ -52,7 +52,7 @@ def session_counter():
 
 def create_toborzo_form():
 
-    email_list_to_us = ["menyhert.kristof@gmail.hu"] #ez az email cimre fogja elkuldeni a rendeles adatait
+    email_list_to_us = ["menyhert.kristof@gmail.com"] #ez az email cimre fogja elkuldeni a rendeles adatait
 
     with st.form(key='toborzo_form'):
 
