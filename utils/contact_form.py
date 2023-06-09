@@ -71,13 +71,14 @@ def create_toborzo_form():
         birth_year = st.selectbox("Születési ev", key='birth_year', options=birth_year_list)
         
         st.markdown('### Kerdesek')
-        lakhely_options = ["", "Budapest", "Pest megye", "Egyeb"]
+        blank_valasztas = "Kerjuk valassz"
+        lakhely_options = [blank_valasztas, "Budapest", "Pest megye", "Egyeb"]
         lakhely = st.radio("Hol laksz? Honnan jarnal be dolgozni?", key='lakhely', options = lakhely_options, horizontal=True)
-        mellek_vagy_foallas = st.radio("Mellék, vagy főállásban dolgoznál nálunk?", key='mellek_vagy_foallas', options = ["", "Mellekallasban", "Foallasban"], horizontal=True)
-        tapasztalat = st.radio("Van tapasztalatod autómosás, vagy autókozmetika területén? - nem kizáró ok ha nincs", key='tapasztalat', options = ["", "Igen", "Valamennyi van", "Nem"], horizontal=True)
-        motor = st.radio("Rendelkezel kismotor/motor, vagy B kategóriás jogosítvánnyal?", key='motor', options = ["", "Igen", "Nem"], horizontal=True)
-        robogo = st.radio("Rendelkezel tapasztalattal motorozás/robogózás terén? - nem kizáró ok ha nem", key='robogo', options = ["", "Igen", "Nem"], horizontal=True,)
-        auto = st.radio("Rendelkezel saját autóval? - nem kizáró ok ha nem", key='auto', options = ["", "Igen", "Nem"], horizontal=True)
+        mellek_vagy_foallas = st.radio("Mellék, vagy főállásban dolgoznál nálunk?", key='mellek_vagy_foallas', options = [blank_valasztas, "Mellekallasban", "Foallasban"], horizontal=True)
+        tapasztalat = st.radio("Van tapasztalatod autómosás, vagy autókozmetika területén? - nem kizáró ok ha nincs", key='tapasztalat', options = [blank_valasztas, "Igen", "Valamennyi van", "Nem"], horizontal=True)
+        motor = st.radio("Rendelkezel kismotor/motor, vagy B kategóriás jogosítvánnyal?", key='motor', options = [blank_valasztas, "Igen", "Nem"], horizontal=True)
+        robogo = st.radio("Rendelkezel tapasztalattal motorozás/robogózás terén? - nem kizáró ok ha nem", key='robogo', options = [blank_valasztas, "Igen", "Nem"], horizontal=True,)
+        auto = st.radio("Rendelkezel saját autóval? - nem kizáró ok ha nem", key='auto', options = [blank_valasztas, "Igen", "Nem"], horizontal=True)
 
         submitted = st.form_submit_button("Jelentkezem", on_click=session_counter)
 
@@ -114,22 +115,22 @@ def create_toborzo_form():
                 if birth_year == "Valassz szuletesi evet":
                     st.warning("Kerjuk valassza ki a szuletesi evet.")
                     error_counter += 1
-                if lakhely == "":
+                if lakhely == blank_valasztas:
                     st.warning("Kerjuk valassza ki a lakhelyet.")
                     error_counter += 1
-                if mellek_vagy_foallas == "":
+                if mellek_vagy_foallas == blank_valasztas:
                     st.warning("Kerjuk valassza ki hogy mellek, vagy foallasban szeretne dolgozni.")
                     error_counter += 1
-                if tapasztalat == "":
+                if tapasztalat == blank_valasztas:
                     st.warning("Kerjuk valassza ki hogy van-e tapasztalata autómosás, vagy autókozmetika területén.")
                     error_counter += 1
-                if motor == "":
+                if motor == blank_valasztas:
                     st.warning("Kerjuk valassza ki hogy rendelkezik-e kismotor/motor, vagy B kategóriás jogosítvánnyal.")
                     error_counter += 1
-                if robogo == "":
+                if robogo == blank_valasztas:
                     st.warning("Kerjuk valassza ki hogy rendelkezik-e tapasztalattal motorozás/robogózás terén.")
                     error_counter += 1
-                if auto == "":
+                if auto == blank_valasztas:
                     st.warning("Kerjuk valassza ki hogy rendelkezik-e saját autóval.")
                     error_counter += 1
                 
