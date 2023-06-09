@@ -4,8 +4,6 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from utils.custom_functions import *
 from utils.contact_form import *
-import yaml
-from yaml.loader import SafeLoader
 import ssl
 
 ssl._create_default_https_context = ssl._create_unverified_context
