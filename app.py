@@ -4,7 +4,6 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from utils.custom_functions import *
 from utils.contact_form import *
-import streamlit_authenticator as stauth
 import yaml
 from yaml.loader import SafeLoader
 import ssl
