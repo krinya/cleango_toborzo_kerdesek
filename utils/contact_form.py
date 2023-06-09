@@ -65,7 +65,8 @@ def create_toborzo_form():
         name = st.text_input("Név", key='name')
         email_user = st.text_input("Email cimed", key='email_user')
         phone_number = st.text_input("Telefonszámod", key='phone_number')
-        birth_year = st.selectbox("Születési év", key='birth_year', options=["Válassz születesi évet"] + list(range(1900, 2021)))
+        default_szuletesi_ev = "Válassz ki hogy melyik évben születtél"
+        birth_year = st.selectbox("Születési éved", key='birth_year', options=[default_szuletesi_ev] + list(range(1900, 2021)))
         
         st.markdown('### Kérdések')
         blank_valasztas = "Kérjük válassz:"
@@ -107,7 +108,7 @@ def create_toborzo_form():
                 if phone_number == "":
                     st.warning("Kerjük adja meg a telefonszámat helyesen.")
                     error_counter += 1
-                if birth_year == "Valassz szuletesi evet":
+                if birth_year == default_szuletesi_ev:
                     st.warning("Kerjük válassza ki a születesi évét.")
                     error_counter += 1
                 if lakhely == blank_valasztas:
@@ -133,7 +134,7 @@ def create_toborzo_form():
                 
                 if error_counter == 0:
                     # create a string with the answers
-                    questiions_and_answers = f"""
+                    questiions_and_answers = f""" <br><br>
                         Név: {name} <br><br>
                         Email: {email_user} <br><br>
                         Telefonszám: {phone_number} <br><br>
@@ -162,7 +163,7 @@ def create_toborzo_form():
                         # Ha a kizaro ok miatt nem tud jelentkezni ezt rakjuk az emailbe
                         email_subject_to_us = "CleanGo - Moso Jelentkezes - Nem sikeres"
                         email_body_to_us = f"""Moso jelentkezes erkezett. A jelentkezes NEM sikeres <br><br> 
-                        A jelentkezo az alabbi valaszokat adta : {questiions_and_answers}"""
+                            A jelentkezo az alabbi valaszokat adta : {questiions_and_answers}"""
                         email_subject_to_user = "CleanGo - Moso toborzas - Sajnáljuk"
                         email_body_to_user = f"""Szia {name}! <br><br>
                         Sajnáljuk a jelentkezésed most nem volt sikeres. :( <br><br> Ez lehet azért, mert nem felelt meg a feltételeknek, vagy mert jelenleg nincs szabad kapacításunk fogadni Téged. <br><br> 
