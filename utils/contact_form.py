@@ -183,7 +183,7 @@ def create_toborzo_form():
                     # The id and the created_at and updated_at columns are automatically filled by the database.
                     insert_query = """INSERT INTO cleango.bi_job_applications (name, email, outcome, telephone_number, dob, questions) VALUES ('{}', '{}', '{}', '{}', '{}', '{}')""".format(
                         name, email_user, kizaro_ok, phone_number, birth_year, questiions_and_answers_dictionary)
-                    print(insert_query)
+                    st.write(insert_query)
                     cursor.execute(insert_query)
                     # Commit the changes and close the cursor and the database connection
                     conn.commit()
