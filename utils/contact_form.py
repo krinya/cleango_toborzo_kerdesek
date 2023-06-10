@@ -73,7 +73,8 @@ def create_toborzo_form():
         
         st.markdown('### Kérdések')
         blank_valasztas = "Kérjük válassz:"
-        horizontal = True
+        horizontal = False
+        label_visibility = "visible"
 
         lakhely = st.radio("Hol laksz? (Honnan járnál be dolgozni?)", key='lakhely', options = [blank_valasztas, "Budapest", "Pest megyei település", "Egyéb"], horizontal=horizontal)
         mellek_vagy_foallas = st.radio("Mellék, vagy főállásban dolgoznál nálunk?", key='mellek_vagy_foallas', options = [blank_valasztas, "Mellékallasban", "Főállásban"], horizontal=horizontal)
@@ -82,15 +83,12 @@ def create_toborzo_form():
         jogositvany = st.radio("Rendelkezel kismotor/motor, vagy B kategóriás jogosítvánnyal?", key='motor', options = [blank_valasztas, "Igen", "Nem"], horizontal=horizontal)
         robogo = st.radio("Rendelkezel tapasztalattal motorozás/robogózás terén?", key='robogo', options = [blank_valasztas, "Igen", "Nem"], horizontal=horizontal)
         
-        submitted = st.form_submit_button("Jelentkezem", on_click=session_counter)
+        submitted = st.form_submit_button("Jelentkezés beküldése", on_click=session_counter)
 
         col1, col2 = st.columns([2, 2])
 
         with col1:
-            st.markdown("Nyomja meg a gombot, hogy a jelentkezését elküldje nekünk.")
-        with col2:
-            st.write("Ha valami kérdése van, kérjük keressen minket bizalommal a következő elérhetőségeken:")
-            st.write("Email: info@cleango.hu")
+            st.markdown("Nyomd meg a gombot, hogy a jelentkezésed elküld nekünk.")
 
         if submitted:
             print("submitted")
