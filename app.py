@@ -18,7 +18,7 @@ with col1:
 # create a Streamlit app
 
 st.title("CleanGo - Mosó Jelentkezés")
-st.markdown(f"""Szia! Ha autómosónak szeretnél jelentkezeni a CleanGo-ba, akkor jó helyen jársz.\n\nTöltsd ki az alábbi űrlapot, és mi hamarosan felveszünk veled kapcsolatot.\n\nKöszönjük, hogy jelentkezel, reméljük hamarosan találkozunk!""")
+st.markdown(f"""Szia! \n\n Ha autómosónak szeretnél jelentkezeni a CleanGo-ba, akkor jó helyen jársz.\n\nTöltsd ki az alábbi űrlapot, és mi hamarosan felveszünk veled kapcsolatot.\n\nKöszönjük, hogy jelentkezel, reméljük hamarosan találkozunk!""")
 st.markdown(f"""Ha elakadtál vagy kérdésed van, kérjük keressen minket bizalommal az info@cleango.hu email címen.""")
 
 create_toborzo_form()

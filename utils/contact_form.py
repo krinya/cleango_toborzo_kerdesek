@@ -205,7 +205,7 @@ def create_toborzo_form():
 
                     if kizaro_ok == 0:
                         # Ha nincs kizaro ok
-                        foglalasi_link = "https://calendly.com/cleango/interju"
+                        foglalasi_link = "https://koalendar.com/e/online-allasinterju-60-percben"
                         email_subject_to_us = "CleanGo - Moso toborzas"
                         email_body_to_us = f"""Moso jelentkezes erkezett. A jelentkezes SIKERES. <br><br> 
                             A jelentkezo az alabbi valaszokat adta : {questiions_and_answers}"""
