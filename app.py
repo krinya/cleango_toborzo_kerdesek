@@ -11,6 +11,15 @@ ssl._create_default_https_context = ssl._create_unverified_context
 #set streamlit page name
 st.set_page_config(page_title='CleanGo - Mosó Jelentkezés"', page_icon='data/cleango-logo-small.png', layout='centered')
 
+
+hide_menu_style = """
+        <style>
+        #MainMenu {visibility: hidden;}
+        </style>
+        """
+st.markdown(hide_menu_style, unsafe_allow_html=True)
+
+
 col1, col2 = st.columns([2, 8])
 with col1:
     add_picture_to_streamlit('data/cleango-logo-small.png', caption = None)
