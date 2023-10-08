@@ -67,7 +67,7 @@ def create_toborzo_form():
         st.markdown('### Személyes adatok')
         name = st.text_input("Név", key='name')
         email_user = st.text_input("Email cimed", key='email_user')
-        phone_number = st.text_input("Telefonszámod", key='phone_number')
+        phone_number = st.text_input("Telefonszámod", key='phone_number', value=f"""+36""")
         default_szuletesi_ev = "Válassz ki hogy melyik évben születtél"
         birth_year = st.selectbox("Születési éved", key='birth_year', options=[default_szuletesi_ev] + list(range(1900, 2021)))
         
