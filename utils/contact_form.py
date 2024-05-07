@@ -64,6 +64,7 @@ def create_toborzo_form():
 
         col1, col2, col3 = st.columns([6, 1, 1])
 
+
         st.markdown('### Személyes adatok')
         name = st.text_input("Név", key='name')
         email_user = st.text_input("Email cimed", key='email_user')
