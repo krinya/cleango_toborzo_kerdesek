@@ -67,8 +67,8 @@ def create_toborzo_form():
         st.markdown('### Személyes adatok')
         name = st.text_input("Név", key='name')
         email_user = st.text_input("Email cimed", key='email_user')
-        phone_number = st.text_input("Telefonszámod", key='phone_number')
-        default_szuletesi_ev = "Válassz ki hogy melyik évben születtél"
+        phone_number = st.text_input("Telefonszámod", key='phone_number', placeholder='+36')
+        default_szuletesi_ev = "Válasszd ki hogy melyik évben születtél"
         birth_year = st.selectbox("Születési éved", key='birth_year', options=[default_szuletesi_ev] + list(range(1900, 2021)))
         
         st.markdown('### Kérdések')
@@ -76,12 +76,12 @@ def create_toborzo_form():
         horizontal = False
         label_visibility = "visible"
 
-        lakhely = st.radio("Hol laksz? (Honnan járnál be dolgozni?)", key='lakhely', options = [blank_valasztas, "Budapest", "Pest megyei település", "Egyéb"], horizontal=horizontal)
-        mellek_vagy_foallas = st.radio("Mellék, vagy főállásban dolgoznál nálunk?", key='mellek_vagy_foallas', options = [blank_valasztas, "Mellékallasban", "Főállásban"], horizontal=horizontal)
-        van_auto = st.radio("Rendelkezel saját autóval?", key='van_auto', options = [blank_valasztas, "Igen", "Nem"], horizontal=horizontal)
-        tapasztalat = st.radio("Van tapasztalatod autómosás, vagy autókozmetika területén?", key='tapasztalat', options = [blank_valasztas, "Igen", "Valamennyi van", "Nem"], horizontal=horizontal)
-        jogositvany = st.radio("Rendelkezel kismotor/motor, vagy B kategóriás jogosítvánnyal?", key='motor', options = [blank_valasztas, "Igen", "Nem"], horizontal=horizontal)
-        robogo = st.radio("Rendelkezel tapasztalattal motorozás/robogózás terén?", key='robogo', options = [blank_valasztas, "Igen", "Nem"], horizontal=horizontal)
+        lakhely = st.radio("Hol laksz? (Honnan járnál be dolgozni?)", key='lakhely', options = ["Budapest", "Pest megyei település", "Egyéb"], horizontal=horizontal, index=None)
+        mellek_vagy_foallas = st.radio("Mellék, vagy főállásban dolgoznál nálunk?", key='mellek_vagy_foallas', options = ["Mellékallasban", "Főállásban"], horizontal=horizontal, index=None)
+        van_auto = st.radio("Rendelkezel saját autóval?", key='van_auto', options = [blank_valasztas, "Igen", "Nem"], horizontal=horizontal, index=None)
+        tapasztalat = st.radio("Van tapasztalatod autómosás, vagy autókozmetika területén?", key='tapasztalat', options = ["Igen", "Valamennyi van", "Nem"], horizontal=horizontal, index=None)
+        jogositvany = st.radio("Rendelkezel kismotor/motor, vagy B kategóriás jogosítvánnyal?", key='motor', options = ["Igen", "Nem"], horizontal=horizontal, index=None)
+        robogo = st.radio("Rendelkezel tapasztalattal motorozás/robogózás terén?", key='robogo', options = ["Igen", "Nem"], horizontal=horizontal, index=None)
         
         submitted = st.form_submit_button("Jelentkezés beküldése", on_click=session_counter)
 
@@ -109,25 +109,29 @@ def create_toborzo_form():
                 if phone_number == "":
                     st.warning("Kerjük adja meg a telefonszámat helyesen.")
                     error_counter += 1
+                # phone number can only contain numbers and the + sign
+                if not phone_number.replace("+", "").isdigit():
+                    st.warning("Kerjük adja meg a telefonszámat helyesen.")
+                    error_counter += 1
                 if birth_year == default_szuletesi_ev:
                     st.warning("Kerjük válassza ki a születesi évét.")
                     error_counter += 1
-                if lakhely == blank_valasztas:
+                if lakhely is None:
                     st.warning("Kerjük válassza ki a lakhelyet.")
                     error_counter += 1
-                if mellek_vagy_foallas == blank_valasztas:
+                if mellek_vagy_foallas is None:
                     st.warning("Kerjük válassza ki hogy mellek, vagy foallasban szeretne dolgozni.")
                     error_counter += 1
-                if van_auto == blank_valasztas:
+                if van_auto is None:
                     st.warning("Kerjük válassza ki hogy van-e sajat autoja.")
                     error_counter += 1
-                if tapasztalat == blank_valasztas:
+                if tapasztalat is None:
                     st.warning("Kerjük válassza ki hogy van-e tapasztalata autómosás, vagy autókozmetika területén.")
                     error_counter += 1
-                if jogositvany == blank_valasztas:
+                if jogositvany is None:
                     st.warning("Kerjük válassza ki hogy rendelkezik-e kismotor/motor, vagy B kategóriás jogosítvánnyal.")
                     error_counter += 1
-                if robogo == blank_valasztas:
+                if robogo is None:
                     st.warning("Kerjük válassza ki hogy rendelkezik-e tapasztalattal motorozás/robogózás terén.")
                     error_counter += 1
 
