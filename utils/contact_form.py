@@ -79,7 +79,7 @@ def create_toborzo_form():
 
         lakhely = st.radio("Hol laksz? (Honnan járnál be dolgozni?)", key='lakhely', options = ["Budapest", "Pest megyei település", "Egyéb"], horizontal=horizontal, index=None)
         mellek_vagy_foallas = st.radio("Mellék, vagy főállásban dolgoznál nálunk?", key='mellek_vagy_foallas', options = ["Mellékallasban", "Főállásban"], horizontal=horizontal, index=None)
-        van_auto = st.radio("Rendelkezel saját autóval?", key='van_auto', options = [blank_valasztas, "Igen", "Nem"], horizontal=horizontal, index=None)
+        van_auto = st.radio("Rendelkezel saját autóval?", key='van_auto', options = ["Igen", "Nem"], horizontal=horizontal, index=None)
         tapasztalat = st.radio("Van tapasztalatod autómosás, vagy autókozmetika területén?", key='tapasztalat', options = ["Igen", "Valamennyi van", "Nem"], horizontal=horizontal, index=None)
         jogositvany = st.radio("Rendelkezel kismotor/motor, vagy B kategóriás jogosítvánnyal?", key='motor', options = ["Igen", "Nem"], horizontal=horizontal, index=None)
         robogo = st.radio("Rendelkezel tapasztalattal motorozás/robogózás terén?", key='robogo', options = ["Igen", "Nem"], horizontal=horizontal, index=None)
