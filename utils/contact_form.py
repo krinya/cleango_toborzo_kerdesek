@@ -71,7 +71,8 @@ def create_toborzo_form():
         phone_number = st.text_input("Telefonszámod", key='phone_number', placeholder='+36', value='+36')
         default_szuletesi_ev = "Válasszd ki hogy melyik évben születtél"
         birth_year = st.selectbox("Születési éved", key='birth_year', options=[default_szuletesi_ev] + list(range(1900, 2021)))
-        
+
+
         st.markdown('### Kérdések')
         blank_valasztas = "Kérjük válassz:"
         horizontal = False
@@ -83,6 +84,9 @@ def create_toborzo_form():
         tapasztalat = st.radio("Van tapasztalatod autómosás, vagy autókozmetika területén?", key='tapasztalat', options = ["Igen", "Valamennyi van", "Nem"], horizontal=horizontal, index=None)
         jogositvany = st.radio("Rendelkezel kismotor/motor, vagy B kategóriás jogosítvánnyal?", key='motor', options = ["Igen", "Nem"], horizontal=horizontal, index=None)
         robogo = st.radio("Rendelkezel tapasztalattal motorozás/robogózás terén?", key='robogo', options = ["Igen", "Nem"], horizontal=horizontal, index=None)
+        about_us_default = "Valassz a legördülő listából"
+        about_us = st.selectbox("Hogyan találtál ránk?", key='about_us',
+                                options = [about_us_default, "A honlapotokon találtam rátok", "Facebook-on láttalak titeket", "Instagramon láttalak titeket", "Profession.hu", "Ismerőstől hallottam", "Google vagy egyéb kereső" "Egyéb"])
         
         submitted = st.form_submit_button("Jelentkezés beküldése", on_click=session_counter)
 
@@ -163,7 +167,8 @@ def create_toborzo_form():
                         "own_car": van_auto,
                         "experience": tapasztalat,
                         "motor_licence": jogositvany,
-                        "motor_experience": robogo
+                        "motor_experience": robogo,
+                        "about_us": about_us
                     }
                     # convert dict to a string
                     questiions_and_answers_dictionary = str(questiions_and_answers_dictionary)
@@ -178,6 +183,8 @@ def create_toborzo_form():
                     if jogositvany == "Nem":
                         kizaro_ok = kizaro_ok + 1
                     if robogo == "Nem" and van_auto == "Nem":
+                        kizaro_ok = kizaro_ok + 1
+                    if about_us == about_us_default or about_us is None:
                         kizaro_ok = kizaro_ok + 1
 
                     conn = create_connection()
