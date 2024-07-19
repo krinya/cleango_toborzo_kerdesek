@@ -86,14 +86,14 @@ def create_toborzo_form():
         robogo = st.radio("Rendelkezel tapasztalattal motorozás/robogózás terén?", key='robogo', options = ["Igen", "Nem"], horizontal=horizontal, index=None)
         about_us_default = "Valassz a legördülő listából"
         about_us = st.selectbox("Hogyan találtál ránk?", key='about_us',
-                                options = [about_us_default, "A honlapotokon találtam rátok", "Facebook-on láttalak titeket", "Instagramon láttalak titeket", "Profession.hu", "Ismerőstől hallottam", "Google vagy egyéb kereső" "Egyéb"])
+                                options = [about_us_default, "A honlapotokon találtam rátok", "Facebook-on láttalak titeket", "Instagramon láttalak titeket", "Profession.hu", "Ismerőstől hallottam", "Google vagy egyéb kereső", "Egyéb"])
         
         submitted = st.form_submit_button("Jelentkezés beküldése", on_click=session_counter)
 
         col1, col2 = st.columns([2, 2])
 
         with col1:
-            st.markdown("Nyomd meg a gombot, hogy a jelentkezésed elküld nekünk.")
+            st.markdown("Nyomd meg a gombot, majd várj egy kicsit, hogy a jelentkezésed elküld nekünk.")
 
         if submitted:
             print("submitted")
@@ -223,23 +223,27 @@ def create_toborzo_form():
                             A jelentkezo az alabbi valaszokat adta : {questiions_and_answers}"""
                         email_subject_to_user = "CleanGo - Gratulálunk"
                         email_body_to_user = f"""Szia {name}! <br><br>
-                        Gratulálunk, a válaszaid alapján kiválasztásra kerültél. Az első lépést megtetted a CleanGo csapatába való bekerüléshez. <br><br> 
-                        A masodik lépéshez foglalj időpontot a következő linken: {foglalasi_link} <br><br> Üdvözlettel, <br> CleanGo csapata <br><br>"""
+                        Gratulálunk, a válaszaid alapján kiválasztásra kerültél. <br><br>
+                        Az első lépést megtetted a CleanGo csapatába való bekerüléshez. <br><br>
+                        A masodik lépés egy online meeting, amiben elmondjuk a további részleteket, és megismerhetjük egymást.<br<br>
+                        Ehhez foglalj időpontot a következő linken: {foglalasi_link} <br><br>
+                        Üdvözlettel,<br>
+                        a CleanGo csapata <br><br>"""
                         
                     # send the email to CleanGo
                     for email_adress_to_us in email_list_to_us:
                         try:
                             send_email(email_adress_to_us, email_subject_to_us, email_body_to_us)
-                            st.write("A jelentkezest a CleanGo megkapta. A jelentkezest a lehető leghamarabb feldolgozzuk, es visszajelzunk.")
+                            st.success("A jelentkezest a CleanGo megkapta. A jelentkezest a lehető leghamarabb feldolgozzuk, es visszajelzunk.")
                         except:
-                            st.write("Hoppá valami hiba történt. A jelentezest a CleanGo nem kapta meg.")
+                            st.error("Hoppá valami hiba történt. A jelentezest a CleanGo nem kapta meg.")
                         
                     # send the email to the user
                     try:
                         send_email(email_user, email_subject_to_user, email_body_to_user)
-                        st.write("A további teendőket az alábbi emailcímre küldtük el:")
-                        st.write(" {}".format(email_user))
-                        st.write("Kérjük ellenőrizd a spam mappát is!")
+                        st.success("A további teendőket az alábbi emailcímre küldtük el:")
+                        st.success("{}".format(email_user))
+                        st.success("Kérjük ellenőrizd a spam mappát is!")
                     except:
-                        st.write("Hoppá valami hiba történt. A további teendőket nem tudtuk elküldeni az alábbi emailcímre:")
-                        st.write("{}".format(email_user))
+                        st.error("Hoppá valami hiba történt. A további teendőket nem tudtuk elküldeni az alábbi emailcímre:")
+                        st.error("{}".format(email_user))
