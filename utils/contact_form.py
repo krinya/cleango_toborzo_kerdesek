@@ -204,16 +204,49 @@ def create_toborzo_form():
                     conn.commit()
                     cursor.close()
                     conn.close()
+
                     
                     if kizaro_ok > 0:
                         # Ha a kizaro ok miatt nem tud jelentkezni ezt rakjuk az emailbe
                         email_subject_to_us = "CleanGo - Moso Jelentkezes - Nem sikeres"
                         email_body_to_us = f"""Moso jelentkezes erkezett. A jelentkezes NEM sikeres <br><br> 
                             A jelentkezo az alabbi valaszokat adta : {questiions_and_answers}"""
-                        email_subject_to_user = "CleanGo - Moso toborzas - Sajnáljuk"
-                        email_body_to_user = f"""Szia {name}! <br><br>
-                        Sajnáljuk a jelentkezésed most nem volt sikeres. :( <br><br> Ez lehet azért, mert nem felelt meg a feltételeknek, vagy mert jelenleg nincs szabad kapacításunk fogadni Téged. <br><br> 
-                        Köszönjük, hogy jelentkeztél, és ha változik a helyzet, akkor felvesszük veled a kapcsolatot. <br><br> Üdvözlettel, <br> CleanGo csapata <br><br>"""
+                        email_subject_to_user = "CleanGo - Sajnáljuk a jelentkezésed nem volt sikeres"
+                        email_body_to_user = f"""
+                                            </head>
+                        <body style="font-family: Arial, sans-serif; color: #333; margin: 0; padding: 0; background-color: #9ff5b2;">
+                            <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #02BF7B; padding: 0; margin: 0;">
+                            <tr>
+                        <td align="center" style="padding: 20px 0 0 0;">
+                            <!-- Logo -->
+                            <img src="https://cleango.hu/sitebuild/img/logo-text.png" alt="Cleango Logo" style="max-width: 100px; height: auto;">
+                        </td>
+                    </tr>
+                                <tr>
+                                    <td align="center" style="padding: 20px 0;">
+                                        <table role="presentation" style="width: 600px; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                                            <tr>
+                                                <td style="padding: 20px;">
+                                                
+                                                    <p style="margin: 0 0 20px; font-size: 16px;">
+                                                    
+                                                
+                                                Szia {name}! <br><br>
+                                                Sajnáljuk a jelentkezésed most nem volt sikeres. :( <br><br>
+                                                Ez lehet azért, mert nem felelt meg a feltételeknek, vagy mert jelenleg nincs szabad kapacításunk fogadni Téged. <br><br> 
+                                                Köszönjük, hogy jelentkeztél, és ha változik a helyzet, akkor felvesszük veled a kapcsolatot.
+                                                <br><br> Üdvözlettel,
+                                                <br> CleanGo csapata <br><br>
+                                                                        
+                                                
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </body>
+                        """
 
                     if kizaro_ok == 0:
                         # Ha nincs kizaro ok
@@ -221,14 +254,37 @@ def create_toborzo_form():
                         email_subject_to_us = "CleanGo - Moso toborzas"
                         email_body_to_us = f"""Moso jelentkezes erkezett. A jelentkezes SIKERES. <br><br> 
                             A jelentkezo az alabbi valaszokat adta : {questiions_and_answers}"""
-                        email_subject_to_user = "CleanGo - Gratulálunk"
-                        email_body_to_user = f"""Szia {name}! <br><br>
+                        email_subject_to_user = "CleanGo - Gratulálunk a jelentkezésed sikeres volt"
+                        email_body_to_user = f"""
+                                            </head>
+                        <body style="font-family: Arial, sans-serif; color: #333; margin: 0; padding: 0; background-color: #9ff5b2;">
+                            <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #02BF7B; padding: 0; margin: 0;">
+                                <tr>
+                                    <td align="center" style="padding: 20px 0;">
+                                        <table role="presentation" style="width: 600px; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                                            <tr>
+                                                <td style="padding: 20px;">
+                                                
+                                                    <p style="margin: 0 0 20px; font-size: 16px;">
+                                                    
+                                               Szia {name}! <br><br>
                         Gratulálunk, a válaszaid alapján kiválasztásra kerültél. <br><br>
                         Az első lépést megtetted a CleanGo csapatába való bekerüléshez. <br><br>
-                        A masodik lépés egy online meeting, amiben elmondjuk a további részleteket, és megismerhetjük egymást.<br<br>
-                        Ehhez foglalj időpontot a következő linken: {foglalasi_link} <br><br>
+                        A masodik lépés egy online meeting, amiben elmondjuk a további részleteket, és megismerhetjük egymást. <br<br>
+                        Ehhez foglalj időpontot a következő linken: <br><br> {foglalasi_link} <br><br>
                         Üdvözlettel,<br>
-                        a CleanGo csapata <br><br>"""
+                        a CleanGo csapata <br><br>
+                                                
+                                                
+                                                
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </body>
+                        """
                         
                     # send the email to CleanGo
                     for email_adress_to_us in email_list_to_us:
