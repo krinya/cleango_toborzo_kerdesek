@@ -71,6 +71,7 @@ def create_toborzo_form():
         phone_number = st.text_input("Telefonszámod", key='phone_number', placeholder='+36', value='+36')
         default_szuletesi_ev = "Válasszd ki hogy melyik évben születtél"
         birth_year = st.selectbox("Születési éved", key='birth_year', options=[default_szuletesi_ev] + list(range(1900, 2021)))
+        gender = st.radio("Milyen nemű vagy?", ["Férfi", "Nő", "Egyéb"], horizontal=False, index=None, key='gender_radio')
 
 
         st.markdown('### Kérdések')
@@ -120,6 +121,9 @@ def create_toborzo_form():
                     error_counter += 1
                 if birth_year == default_szuletesi_ev:
                     st.warning("Kerjük válassza ki a születesi évét.")
+                    error_counter += 1
+                if gender is None:
+                    st.warning("Kerjük válassza ki a nemét.")
                     error_counter += 1
                 if lakhely is None:
                     st.warning("Kerjük válassza ki a lakhelyet.")
@@ -175,6 +179,8 @@ def create_toborzo_form():
 
                     kizaro_ok = 0
                     if int(birth_year) < 1970:
+                        kizaro_ok = kizaro_ok + 1
+                    if gender != "Férfi":
                         kizaro_ok = kizaro_ok + 1
                     if lakhely == "Pest megye" and van_auto == "Nem":
                         kizaro_ok = kizaro_ok + 1
