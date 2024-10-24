@@ -182,7 +182,7 @@ def create_toborzo_form():
                         kizaro_ok = kizaro_ok + 1
                     if gender != "Férfi":
                         kizaro_ok = kizaro_ok + 1
-                    if lakhely != "Pest megyei település":
+                    if lakhely == "Pest megyei település":
                         kizaro_ok = kizaro_ok + 1
                     if lakhely == "Egyéb":
                         kizaro_ok = kizaro_ok + 1
