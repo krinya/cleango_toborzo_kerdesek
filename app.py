@@ -33,3 +33,5 @@ st.markdown(f"""Szia! \n\n Ha autómosónak szeretnél jelentkezeni a CleanGo-ba
 st.markdown(f"""Ha elakadtál vagy kérdésed van, kérjük keressen minket bizalommal az info@cleango.hu email címen.""")
 
 create_toborzo_form()
+
+st.markdown("Created by: CleanGo, last updated: 2024.10.24.")
