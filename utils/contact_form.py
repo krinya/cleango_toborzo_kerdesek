@@ -182,15 +182,11 @@ def create_toborzo_form():
                         kizaro_ok = kizaro_ok + 1
                     if gender != "Férfi":
                         kizaro_ok = kizaro_ok + 1
-                    if lakhely == "Pest megye" and van_auto == "Nem":
+                    if lakhely != "Pest megye":
                         kizaro_ok = kizaro_ok + 1
                     if lakhely == "Egyéb":
                         kizaro_ok = kizaro_ok + 1
                     if jogositvany == "Nem":
-                        kizaro_ok = kizaro_ok + 1
-                    if robogo == "Nem" and van_auto == "Nem":
-                        kizaro_ok = kizaro_ok + 1
-                    if about_us == about_us_default or about_us is None:
                         kizaro_ok = kizaro_ok + 1
 
                     conn = create_connection()
