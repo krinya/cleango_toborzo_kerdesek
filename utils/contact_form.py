@@ -187,8 +187,6 @@ def create_toborzo_form():
                         kizaro_ok = kizaro_ok + 1
                     if gender != "Férfi":
                         kizaro_ok = kizaro_ok + 1
-                    if lakhely != "Budapest":
-                        kizaro_ok = kizaro_ok + 1
                     if jogositvany == "Nem":
                         kizaro_ok = kizaro_ok + 1
 
