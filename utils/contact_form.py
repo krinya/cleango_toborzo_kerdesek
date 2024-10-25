@@ -70,7 +70,8 @@ def create_toborzo_form():
         email_user = st.text_input("Email cimed", key='email_user')
         phone_number = st.text_input("Telefonszámod", key='phone_number', placeholder='+36', value='+36')
         default_szuletesi_ev = "Válasszd ki hogy melyik évben születtél"
-        birth_year = st.selectbox("Születési éved", key='birth_year', options=[default_szuletesi_ev] + list(range(1900, 2021)))
+        birth_year = st.selectbox("Születési éved", placeholder=default_szuletesi_ev, index=None,
+                                  key='birth_year', options=list(range(1900, 2021)))
         gender = st.radio("Milyen nemű vagy?", ["Férfi", "Nő", "Egyéb"], horizontal=False, index=None, key='gender_radio')
 
 
@@ -78,16 +79,20 @@ def create_toborzo_form():
         blank_valasztas = "Kérjük válassz:"
         horizontal = False
         label_visibility = "visible"
-
-        lakhely = st.radio("Hol laksz? (Honnan járnál be dolgozni?)", key='lakhely', options = ["Budapest", "Pest megyei település", "Egyéb"], horizontal=horizontal, index=None)
+        varosok_listaja = ["Budapest", "---", "Békéscsaba", "Debrecen", "Eger", "Esztergom",
+                           "Győr", "Hódmezővásárhely", "Kaposvár", "Kecskemét",
+                           "Miskolc", "Nagykanizsa", "Nyíregyháza", "Pécs", "Salgótarján",
+                           "Sopron", "Szeged", "Szekszárd", "Székesfehérvár", "Szolnok",
+                           "Szombathely", "Tatabánya", "Veszprém", "Zalaegerszeg"]
+        lakhely = st.selectbox("Melyik városban szeretnél dolgozni?", key='lakhely', options = varosok_listaja, index=None, placeholder="Valassz várost")
         mellek_vagy_foallas = st.radio("Mellék, vagy főállásban dolgoznál nálunk?", key='mellek_vagy_foallas', options = ["Mellékallasban", "Főállásban"], horizontal=horizontal, index=None)
         van_auto = st.radio("Rendelkezel saját autóval?", key='van_auto', options = ["Igen", "Nem"], horizontal=horizontal, index=None)
         tapasztalat = st.radio("Van tapasztalatod autómosás, vagy autókozmetika területén?", key='tapasztalat', options = ["Igen", "Valamennyi van", "Nem"], horizontal=horizontal, index=None)
         jogositvany = st.radio("Rendelkezel kismotor/motor, vagy B kategóriás jogosítvánnyal?", key='motor', options = ["Igen", "Nem"], horizontal=horizontal, index=None)
         robogo = st.radio("Rendelkezel tapasztalattal motorozás/robogózás terén?", key='robogo', options = ["Igen", "Nem"], horizontal=horizontal, index=None)
         about_us_default = "Valassz a legördülő listából"
-        about_us = st.selectbox("Hogyan találtál ránk?", key='about_us',
-                                options = [about_us_default, "A honlapotokon találtam rátok", "Facebook-on láttalak titeket", "Instagramon láttalak titeket", "Profession.hu", "Ismerőstől hallottam", "Google vagy egyéb kereső", "Egyéb"])
+        about_us = st.selectbox("Hogyan találtál ránk?", key='about_us', placeholder=about_us_default, index=None,
+                                options = ["A honlapotokon találtam rátok", "Facebook-on láttalak titeket", "Instagramon láttalak titeket", "Profession.hu", "Ismerőstől hallottam", "Google vagy egyéb kereső", "Egyéb"])
         
         submitted = st.form_submit_button("Jelentkezés beküldése", on_click=session_counter)
 
@@ -119,7 +124,7 @@ def create_toborzo_form():
                 if not phone_number.replace("+", "").isdigit():
                     st.warning("Kerjük adja meg a telefonszámat helyesen.")
                     error_counter += 1
-                if birth_year == default_szuletesi_ev:
+                if birth_year == None:
                     st.warning("Kerjük válassza ki a születesi évét.")
                     error_counter += 1
                 if gender is None:
@@ -182,12 +187,15 @@ def create_toborzo_form():
                         kizaro_ok = kizaro_ok + 1
                     if gender != "Férfi":
                         kizaro_ok = kizaro_ok + 1
-                    if lakhely == "Pest megyei település":
-                        kizaro_ok = kizaro_ok + 1
-                    if lakhely == "Egyéb":
+                    if lakhely != "Budapest":
                         kizaro_ok = kizaro_ok + 1
                     if jogositvany == "Nem":
                         kizaro_ok = kizaro_ok + 1
+
+                    mas_varos = 0
+                    if lakhely != "Budapest":
+                        mas_varos = 1
+                    
 
                     conn = create_connection()
                     cursor = conn.cursor()
@@ -252,41 +260,82 @@ def create_toborzo_form():
 
                     if kizaro_ok == 0:
                         # Ha nincs kizaro ok
-                        foglalasi_link = "https://koalendar.com/e/online-allasinterju-60-percben"
-                        email_subject_to_us = "CleanGo - Moso toborzas"
-                        email_body_to_us = f"""Moso jelentkezes erkezett. A jelentkezes SIKERES. <br><br> 
-                            A jelentkezo az alabbi valaszokat adta : {questiions_and_answers}"""
-                        email_subject_to_user = "CleanGo - Gratulálunk a jelentkezésed sikeres volt"
-                        email_body_to_user = f"""
-                                            </head>
-                        <body style="font-family: Arial, sans-serif; color: #333; margin: 0; padding: 0; background-color: #9ff5b2;">
-                            <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #02BF7B; padding: 0; margin: 0;">
-                                <tr>
-                                    <td align="center" style="padding: 20px 0;">
-                                        <table role="presentation" style="width: 600px; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-                                            <tr>
-                                                <td style="padding: 20px;">
-                                                
-                                                    <p style="margin: 0 0 20px; font-size: 16px;">
+
+                        if mas_varos == 0:
+                            # Budapest
+                            foglalasi_link = "https://koalendar.com/e/online-allasinterju-60-percben"
+                            email_subject_to_us = "CleanGo - Moso toborzas"
+                            email_body_to_us = f"""Moso jelentkezes erkezett. A jelentkezes SIKERES. <br><br> 
+                                A jelentkezo az alabbi valaszokat adta : {questiions_and_answers}"""
+                            email_subject_to_user = "CleanGo - Gratulálunk a jelentkezésed sikeres volt"
+                            email_body_to_user = f"""
+                                                </head>
+                            <body style="font-family: Arial, sans-serif; color: #333; margin: 0; padding: 0; background-color: #9ff5b2;">
+                                <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #02BF7B; padding: 0; margin: 0;">
+                                    <tr>
+                                        <td align="center" style="padding: 20px 0;">
+                                            <table role="presentation" style="width: 600px; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                                                <tr>
+                                                    <td style="padding: 20px;">
                                                     
-                                               Szia {name}! <br><br>
-                        Gratulálunk, a válaszaid alapján kiválasztásra kerültél. <br><br>
-                        Az első lépést megtetted a CleanGo csapatába való bekerüléshez. <br><br>
-                        A masodik lépés egy online meeting, amiben elmondjuk a további részleteket, és megismerhetjük egymást. <br<br>
-                        Ehhez foglalj időpontot a következő linken: <br><br> {foglalasi_link} <br><br>
-                        Üdvözlettel,<br>
-                        a CleanGo csapata <br><br>
-                                                
-                                                
-                                                
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </body>
-                        """
+                                                        <p style="margin: 0 0 20px; font-size: 16px;">
+                                                        
+                                                Szia {name}! <br><br>
+                            Gratulálunk, a válaszaid alapján kiválasztásra kerültél. <br><br>
+                            Az első lépést megtetted a CleanGo csapatába való bekerüléshez. <br><br>
+                            A masodik lépés egy online meeting, amiben elmondjuk a további részleteket, és megismerhetjük egymást. <br<br>
+                            Ehhez foglalj időpontot a következő linken: <br><br> {foglalasi_link} <br><br>
+                            Üdvözlettel,<br>
+                            a CleanGo csapata <br><br>
+                                                    
+                                                    
+                                                    
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </body>
+                            """
+                        
+                        else:
+                            # Mas varos
+                            foglalasi_link = "https://koalendar.com/e/online-allasinterju-60-percben"
+                            email_subject_to_us = "CleanGo - Moso toborzas"
+                            email_body_to_us = f"""Moso jelentkezes erkezett. A jelentkezes SIKERES DE NEM BUDAPESTROL VAN. <br><br> 
+                                A jelentkezo az alabbi valaszokat adta : {questiions_and_answers}"""
+                            email_subject_to_user = "CleanGo - Sajnos a CleanGo még nem elérhető az kiválasztott lokáción"
+                            email_body_to_user = f"""
+                                                </head>
+                            <body style="font-family: Arial, sans-serif; color: #333; margin: 0; padding: 0; background-color: #9ff5b2;">
+                                <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #02BF7B; padding: 0; margin: 0;">
+                                    <tr>
+                                        <td align="center" style="padding: 20px 0;">
+                                            <table role="presentation" style="width: 600px; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                                                <tr>
+                                                    <td style="padding: 20px;">
+                                                    
+                                                        <p style="margin: 0 0 20px; font-size: 16px;">
+                                                        
+                                                Szia {name}! <br><br>
+                            Sajnos, a CleanGo jelenleg még nem elérhető azon a helyen, ahol dolgozni szeretnél. <br><br>
+                            Dolgozunk rajta, hogy minél több városban elérhetőek legyünk! <br><br>
+                            Értesíteni fogunk, amint a közeledben megnyitjuk szolgáltatásunkat.<br><br>
+                            Reméljük, hogy találkozunk még!<br><br>
+                            Üdvözlettel,<br>
+                            a CleanGo csapata <br><br>
+                                                    
+                                                    
+                                                    
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </body>
+                            """
                         
                     # send the email to CleanGo
                     for email_adress_to_us in email_list_to_us:

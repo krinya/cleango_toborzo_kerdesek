@@ -34,4 +34,4 @@ st.markdown(f"""Ha elakadtál vagy kérdésed van, kérjük keressen minket biza
 
 create_toborzo_form()
 
-st.markdown("Created by: CleanGo, last updated: 2024.10.24.")
+st.markdown("Created by: CleanGo, last updated: 2024.10.25.")
