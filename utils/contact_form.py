@@ -194,6 +194,7 @@ def create_toborzo_form():
                     if lakhely != "Budapest":
                         mas_varos = 1
                     
+                    outcome = kizaro_ok + mas_varos
 
                     conn = create_connection()
                     cursor = conn.cursor()
@@ -202,7 +203,7 @@ def create_toborzo_form():
                     insert_query = """INSERT INTO cleango.bi_washer_applications (name, email, outcome, telephone_number, dob, questions) VALUES ('{}', '{}', '{}', '{}', '{}', '{}')""".format(
                         name,
                         email_user,
-                        kizaro_ok,
+                        outcome,
                         phone_number,
                         birth_year,
                         questiions_and_answers_dictionary.replace("'", "''")
