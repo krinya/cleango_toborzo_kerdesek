@@ -189,6 +189,8 @@ def create_toborzo_form():
                         kizaro_ok = kizaro_ok + 1
                     if jogositvany == "Nem":
                         kizaro_ok = kizaro_ok + 1
+                    if mellek_vagy_foallas != 'Főállásban':
+                        kizaro_ok = kizaro_ok + 1
 
                     mas_varos = 0
                     if lakhely != "Budapest":
